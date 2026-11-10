@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dev Expasion</title>
+    <meta
+      name="description"
+      content="Dev Expasion: apps que expandem o seu dia a dia, simples de usar e feitos no Brasil. Criador do Controle Financeiro+." />
+    <meta name="theme-color" content="#08090A" />
+    <meta property="og:title" content="Dev Expasion" />
+    <meta property="og:description" content="Apps que expandem o seu dia a dia. Simples de usar, claros com você." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="img/controle-financeiro-icone.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #08090a;
+        --layer: rgba(255, 255, 255, 0.035);
+        --layer-strong: rgba(255, 255, 255, 0.07);
+        --hairline: #1c1e1f;
+        --text: #e9eae6;
+        --muted: #80837b;
+        --faint: #4c4f49;
+        --signal: #beff78;
+        --signal-ink: #beff78;
+        --on-signal: #08090a;
+        --aura: rgba(190, 255, 120, 0.09);
+        color-scheme: dark;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f2f2ee;
+          --layer: rgba(16, 18, 16, 0.04);
+          --layer-strong: rgba(16, 18, 16, 0.07);
+          --hairline: #e1e1db;
+          --text: #101210;
+          --muted: #63665f;
+          --faint: #9a9d95;
+          --signal-ink: #3f7a0a;
+          --on-signal: #101210;
+          --aura: rgba(122, 190, 20, 0.12);
+          color-scheme: light;
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      ::selection {
+        background: var(--signal);
+        color: var(--on-signal);
+      }
+      a {
+        color: var(--signal-ink);
+      }
+      a:focus-visible {
+        outline: 2px solid var(--signal-ink);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .label {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      header.hero {
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid var(--hairline);
+      }
+      header.hero::before {
+        content: '';
+        position: absolute;
+        inset: -40% -20% auto auto;
+        width: 900px;
+        height: 900px;
+        background: radial-gradient(circle, var(--aura) 0%, transparent 60%);
+        pointer-events: none;
+      }
+      .hero .wrap {
+        position: relative;
+        padding-top: clamp(72px, 14vw, 140px);
+        padding-bottom: clamp(64px, 12vw, 120px);
+      }
+      .brand {
+        margin: 18px 0 0;
+        font-weight: 800;
+        font-size: clamp(56px, 13vw, 132px);
+        line-height: 0.92;
+        letter-spacing: -0.045em;
+      }
+      .brand span {
+        color: var(--signal-ink);
+      }
+      .tagline {
+        margin: 28px 0 0;
+        font-weight: 700;
+        font-size: clamp(24px, 4.2vw, 40px);
+        line-height: 1.12;
+        letter-spacing: -0.025em;
+        max-width: 18ch;
+      }
+      .tagline em {
+        font-style: normal;
+        color: var(--signal-ink);
+      }
+      .meaning {
+        margin: 22px 0 0;
+        max-width: 52ch;
+        color: var(--muted);
+        font-size: 17px;
+      }
+      .principles {
+        list-style: none;
+        margin: 40px 0 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .principles li {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+        padding: 9px 14px;
+        border: 1px solid var(--hairline);
+        border-radius: 999px;
+        color: var(--text);
+      }
+
+      section {
+        padding: clamp(56px, 10vw, 96px) 0;
+        border-bottom: 1px solid var(--hairline);
+      }
+      .app {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-top: 28px;
+      }
+      .app > * {
+        min-width: 0;
+      }
+      @media (min-width: 860px) {
+        .app {
+          grid-template-columns: 5fr 6fr;
+          align-items: center;
+          gap: 56px;
+        }
+      }
+      .app-head {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .app-head img {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+      }
+      .app h2 {
+        margin: 0;
+        font-weight: 800;
+        font-size: clamp(28px, 4vw, 36px);
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+      }
+      .app p.desc {
+        margin: 20px 0 0;
+        color: var(--muted);
+        font-size: 17px;
+        max-width: 46ch;
+      }
+      .facts {
+        margin: 28px 0 0;
+        padding: 0;
+        list-style: none;
+        border-radius: 16px;
+        background: var(--layer);
+      }
+      .facts li {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 18px;
+        border-top: 1px solid var(--hairline);
+        font-size: 15px;
+      }
+      .facts li:first-child {
+        border-top: 0;
+      }
+      .facts li span:first-child {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+        color: var(--muted);
+        align-self: center;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px 24px;
+        margin-top: 28px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 48px;
+        padding: 0 22px;
+        border-radius: 999px;
+        background: var(--signal);
+        color: var(--on-signal);
+        font-weight: 700;
+        font-size: 16px;
+        text-decoration: none;
+        transition: transform 0.15s ease;
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+      .btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .link {
+        font-weight: 500;
+        text-underline-offset: 3px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .shots {
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 6px;
+        scrollbar-width: none;
+      }
+      .shots::-webkit-scrollbar {
+        display: none;
+      }
+      .shots img {
+        flex: 0 0 auto;
+        width: min(62vw, 200px);
+        aspect-ratio: 9 / 16;
+        height: auto;
+        border-radius: 18px;
+        border: 1px solid var(--hairline);
+        scroll-snap-align: start;
+        background: #08090a;
+      }
+      @media (min-width: 860px) {
+        .shots {
+          overflow: visible;
+        }
+        .shots img {
+          width: calc((100% - 28px) / 3);
+        }
+        .shots img:nth-child(2) {
+          transform: translateY(-24px);
+        }
+      }
+
+      .contact h2 {
+        margin: 18px 0 0;
+        font-weight: 800;
+        font-size: clamp(28px, 5vw, 44px);
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+        overflow-wrap: anywhere;
+      }
+      .contact h2 a {
+        color: var(--text);
+        text-decoration-color: var(--signal-ink);
+        text-decoration-thickness: 3px;
+        text-underline-offset: 8px;
+      }
+      .contact p {
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 17px;
+        max-width: 50ch;
+      }
+
+      footer {
+        padding: 28px 0 40px;
+      }
+      footer .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px 24px;
+      }
+      footer p {
+        color: var(--faint);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .btn {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <p class="label">Desenvolvedor independente · Brasil</p>
+        <h1 class="brand">Dev<br /><span>Expasion</span></h1>
+        <p class="tagline">Apps que expandem o seu dia a dia. <em>Simples de usar, claros com você.</em></p>
+        <p class="meaning">
+          Expasion vem de expansão: apps que ampliam o que você consegue fazer, do controle das contas ao que vier
+          depois. Feitos com cuidado no Brasil, fáceis de entender e sempre claros sobre o que fazem com os seus dados.
+        </p>
+        <ul class="principles" aria-label="Princípios">
+          <li>Simples de usar</li>
+          <li>Transparente com seus dados</li>
+          <li>Feito no Brasil</li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <section aria-labelledby="app-title">
+        <div class="wrap">
+          <p class="label">Apps</p>
+          <div class="app">
+            <div>
+              <div class="app-head">
+                <img src="img/controle-financeiro-icone.png" alt="" width="64" height="64" />
+                <h2 id="app-title">Controle Financeiro+</h2>
+              </div>
+              <p class="desc">
+                Anote as contas do mês e veja, num olhar, quanto entrou, quanto saiu e quanto sobra. Se o mês fechar no
+                vermelho, você fica sabendo antes.
+              </p>
+              <ul class="facts">
+                <li><span>Plataforma</span><span>Android</span></li>
+                <li><span>Preço</span><span>Grátis, com versão Pro</span></li>
+                <li><span>Seus dados</span><span>Só no seu celular</span></li>
+              </ul>
+              <div class="actions">
+                <a
+                  class="btn"
+                  href="https://play.google.com/store/apps/details?id=com.ricardosantos.controlefinanceiro"
+                  rel="noopener">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                    <path d="M4 2.5v19a.5.5 0 0 0 .76.43l16.5-9.5a.5.5 0 0 0 0-.86L4.76 2.07A.5.5 0 0 0 4 2.5Z" />
+                  </svg>
+                  Baixar na Google Play
+                </a>
+                <a class="link" href="https://ricardo-santos-lub.github.io/controle-financeiro-privacidade/"
+                  >Política de privacidade</a
+                >
+              </div>
+            </div>
+            <div class="shots">
+              <img
+                src="img/1-resumo.png"
+                width="1080"
+                height="1920"
+                loading="lazy"
+                alt="Tela Resumo: anel com a sobra do mês de R$ 930,00 e o que entrou, o que foi pago e o que falta pagar" />
+              <img
+                src="img/2-contas.png"
+                width="1080"
+                height="1920"
+                loading="lazy"
+                alt="Tela Contas: lista das contas do mês com vencimento e situação" />
+              <img
+                src="img/3-relatorios.png"
+                width="1080"
+                height="1920"
+                loading="lazy"
+                alt="Tela Relatórios: gráfico de quanto sobrou em cada mês" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact" aria-labelledby="contact-title">
+        <div class="wrap">
+          <p class="label" id="contact-title">Contato</p>
+          <h2><a href="mailto:dev.expasion@gmail.com">dev.expasion@gmail.com</a></h2>
+          <p>Dúvidas, sugestões ou algum problema com um app: é só escrever. Respondo pessoalmente.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p class="label">© 2026 Dev Expasion</p>
+        <p class="label">Feito no Brasil</p>
+      </div>
+    </footer>
+  </body>
+</html>
